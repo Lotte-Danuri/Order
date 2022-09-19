@@ -1,5 +1,6 @@
 package com.lotte.danuri.order.model.dto;
 
+import com.lotte.danuri.order.model.entity.OrderData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +18,13 @@ public class OrderDataDto {
     private String productName;
     private Long productQuantity;
     private Double productPrice;
+
+    public OrderDataDto(OrderData w) {
+        this.id = w.getId();
+        this.sellerId = w.getSellerId();
+        this.productId = w.getProductId();
+        this.productName = w.getProductName();
+        this.productQuantity = w.getProductQuantity();
+        this.productPrice = w.getProductPrice();
+    }
 }

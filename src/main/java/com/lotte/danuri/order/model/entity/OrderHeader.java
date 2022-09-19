@@ -31,4 +31,8 @@ public class OrderHeader extends BaseEntity {
     @JsonManagedReference
     @OneToMany(mappedBy = "orderHeader",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderData> orderData;
+
+    public void updateDeletedDate(LocalDateTime now) {
+        this.deletedDate = now;
+    }
 }

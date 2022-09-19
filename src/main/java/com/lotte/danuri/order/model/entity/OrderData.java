@@ -26,4 +26,8 @@ public class OrderData extends BaseEntity {
     @JoinColumn(name = "OrderHeader_id")
     @JsonBackReference
     private OrderHeader orderHeader;
+
+    public void updateDeletedDate(LocalDateTime now) {
+        this.deletedDate = now;
+    }
 }

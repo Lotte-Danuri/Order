@@ -4,10 +4,10 @@ import com.lotte.danuri.order.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class ProductNotFoundException extends RuntimeException{
+public class OrderNotFoundException extends RuntimeException{
 
     private ErrorCode errorCode;
-    public ProductNotFoundException(String msg, ErrorCode errorCode){
+    public OrderNotFoundException(String msg, ErrorCode errorCode){
         super(msg);
         this.errorCode = errorCode;
     }

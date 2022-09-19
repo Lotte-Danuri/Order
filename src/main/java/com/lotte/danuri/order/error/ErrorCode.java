@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    PRODUCT_NOT_FOUND(400,"PRODUCT-ERR-400","PRODUCT NOT FOUND IN DB")
+    ORDER_NOT_FOUND(400,"ORDER-ERR-400","ORDER NOT FOUND IN DB")
     ;
 
     private int status;
