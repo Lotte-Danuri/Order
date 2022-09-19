@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<OrderHeaderDto> getOrders(String memberId){
-        List<OrderHeader> orderHeaders = orderHeaderRepository.findAllByBuyerIdAndDeletedDateIsNull(memberId);
+        List<OrderHeader> orderHeaders = orderHeaderRepository.findAllByMemberId(memberId);
         List<OrderHeaderDto> result = new ArrayList<>();
 
         // OrderData -> OrderDataDto
