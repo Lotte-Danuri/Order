@@ -25,9 +25,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void createOrder(OrderHeaderDto orderHeaderDto){
-        // 상품 수량 체크 해야함
-        // 상품 존재 여부 체크 해야함
-        // 주문 시 상품 수량 감소 해야함
+        // Todo : 상품 수량 체크 해야함
+        // Todo : 상품 존재 여부 체크 해야함
+        // Todo : 주문 시 상품 수량 감소 해야함
 
         // OrderHeader INSERT
         OrderHeader orderHeader = orderHeaderRepository.save(
