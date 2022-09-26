@@ -22,6 +22,7 @@ public class OrderController {
     @ApiOperation(value = "주문 생성", notes = "주문(결제)을 생성한다.")
     public ResponseEntity<?> createOrder (@RequestBody OrderHeaderDto orderHeaderDto){
 
+        //TODO : 배송 완료 시 보증 시작일, 종료일 UPDATE
         orderService.createOrder(orderHeaderDto);
         return ResponseEntity.ok().build();
     }

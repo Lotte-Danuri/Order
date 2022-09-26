@@ -2,6 +2,7 @@ package com.lotte.danuri.order.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,7 +20,10 @@ public class OrderData extends BaseEntity {
     private String productName;
     private Long productQuantity;
     private Double productPrice;
-
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime warrantyStartDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime warrantyEndDate;
     private LocalDateTime deletedDate;
 
     @ManyToOne

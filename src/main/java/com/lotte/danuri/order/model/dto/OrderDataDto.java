@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,7 +20,8 @@ public class OrderDataDto {
     private String productName;
     private Long productQuantity;
     private Double productPrice;
-
+    private LocalDateTime warrantyStartDate;
+    private LocalDateTime warrantyEndDate;
     public OrderDataDto(OrderData w) {
         this.id = w.getId();
         this.sellerId = w.getSellerId();
