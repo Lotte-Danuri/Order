@@ -1,7 +1,7 @@
 package com.lotte.danuri.order.controller;
 
 import com.lotte.danuri.order.model.dto.OrderHeaderDto;
-import com.lotte.danuri.order.service.OrderService;
+import com.lotte.danuri.order.service.order.OrderService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
