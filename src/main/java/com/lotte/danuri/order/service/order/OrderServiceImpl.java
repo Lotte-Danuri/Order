@@ -1,4 +1,4 @@
-package com.lotte.danuri.order.service;
+package com.lotte.danuri.order.service.order;
 
 import com.lotte.danuri.order.error.ErrorCode;
 import com.lotte.danuri.order.exception.OrderNotFoundException;
@@ -8,6 +8,7 @@ import com.lotte.danuri.order.model.entity.OrderData;
 import com.lotte.danuri.order.model.entity.OrderHeader;
 import com.lotte.danuri.order.repository.OrderDataRepository;
 import com.lotte.danuri.order.repository.OrderHeaderRepository;
+import com.lotte.danuri.order.service.messagequeue.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class OrderServiceImpl implements OrderService{
 
     private final OrderHeaderRepository orderHeaderRepository;
     private final OrderDataRepository orderDataRepository;
+    private final KafkaProducerService kafkaProducerService;
 
     @Override
     public void createOrder(OrderHeaderDto orderHeaderDto){
@@ -53,6 +55,7 @@ public class OrderServiceImpl implements OrderService{
                     .orderHeader(orderHeader)
                     .build();
             orderDataList.add(orderData);
+            kafkaProducerService.send("order-insert",v);
         });
         orderDataRepository.saveAll(orderDataList);
     }
