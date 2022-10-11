@@ -29,7 +29,6 @@ public class OrderServiceImpl implements OrderService{
     public void createOrder(OrderHeaderDto orderHeaderDto){
         // Todo : 상품 수량 체크 해야함
         // Todo : 상품 존재 여부 체크 해야함
-        // Todo : 주문 시 상품 수량 감소 해야함
 
         // OrderHeader INSERT
         OrderHeader orderHeader = orderHeaderRepository.save(
