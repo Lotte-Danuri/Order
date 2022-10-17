@@ -8,7 +8,9 @@ import java.util.List;
 public interface OrderService {
     void createOrder(OrderHeaderDto orderHeaderDto);
 
-    List<OrderHeaderDto> getOrders(String memberId);
+    List<OrderHeaderDto> getOrders(OrderHeaderDto orderHeaderDto);
 
     void deleteOrder(OrderHeaderDto orderHeaderDto);
+
+    Long getOrdersPrice(OrderHeaderDto orderHeaderDto);
 }
