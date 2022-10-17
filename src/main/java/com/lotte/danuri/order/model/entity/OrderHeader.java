@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderHeader extends BaseEntity {
 
     private String buyerId;
-    private Double totalPrice;
+    private Long totalPrice;
     private Long totalQuantity;
     private String address1;
     private String address2;
