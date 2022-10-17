@@ -29,7 +29,7 @@ public class OrderFailTest {
     private static final Long id = 100L;
     private static final String BASE_URL = "/orders";
     private static final String buyerId = "3";
-    private static final Double totalPrice = 1000000D;
+    private static final Long totalPrice = 1000000L;
     private static final Long totalQuantity = 5L;
     private static final String address1 = "Seoul";
     private static final String address2 = "Dang-san";

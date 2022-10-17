@@ -27,11 +27,11 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value ="/pays/{memberId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value ="/pays/list", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ApiOperation(value = "주문 조회", notes = "한 사용자의 모든 주문을 조회한다.")
-    public ResponseEntity<?> getOrders (@PathVariable String memberId){
+    public ResponseEntity<?> getOrders (@RequestBody OrderHeaderDto orderHeaderDto){
 
-        List<OrderHeaderDto> orderHeaderDtoList = orderService.getOrders(memberId);
+        List<OrderHeaderDto> orderHeaderDtoList = orderService.getOrders(orderHeaderDto);
         return ResponseEntity.ok(orderHeaderDtoList);
     }
 
@@ -41,5 +41,13 @@ public class OrderController {
 
         orderService.deleteOrder(orderHeaderDto);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value ="/pays/total", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(value = "주문 총 금액 조회", notes = "한 사용자의 총 주문 금액을 조회한다.")
+    public ResponseEntity<?> getOrdersPrice (@RequestBody OrderHeaderDto orderHeaderDto){
+
+        Long totalPrice = orderService.getOrdersPrice(orderHeaderDto);
+        return ResponseEntity.ok(totalPrice);
     }
 }

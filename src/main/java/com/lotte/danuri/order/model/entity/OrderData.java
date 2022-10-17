@@ -19,7 +19,7 @@ public class OrderData extends BaseEntity {
     private Long productId;
     private String productName;
     private Long productQuantity;
-    private Double productPrice;
+    private Long productPrice;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime warrantyStartDate;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

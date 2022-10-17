@@ -19,15 +19,17 @@ public class OrderDataDto {
     private Long productId;
     private String productName;
     private Long productQuantity;
-    private Double productPrice;
+    private Long productPrice;
     private LocalDateTime warrantyStartDate;
     private LocalDateTime warrantyEndDate;
-    public OrderDataDto(OrderData w) {
+    private String thumbnail;
+    public OrderDataDto(OrderData w, String thumbnail) {
         this.id = w.getId();
         this.sellerId = w.getSellerId();
         this.productId = w.getProductId();
         this.productName = w.getProductName();
         this.productQuantity = w.getProductQuantity();
         this.productPrice = w.getProductPrice();
+        this.thumbnail = thumbnail;
     }
 }

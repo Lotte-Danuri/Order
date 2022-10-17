@@ -1,9 +1,11 @@
 package com.lotte.danuri.order.service.order;
 
+import com.lotte.danuri.order.client.ProductServiceClient;
 import com.lotte.danuri.order.error.ErrorCode;
 import com.lotte.danuri.order.exception.OrderNotFoundException;
 import com.lotte.danuri.order.model.dto.OrderDataDto;
 import com.lotte.danuri.order.model.dto.OrderHeaderDto;
+import com.lotte.danuri.order.model.dto.client.ProductDto;
 import com.lotte.danuri.order.model.entity.OrderData;
 import com.lotte.danuri.order.model.entity.OrderHeader;
 import com.lotte.danuri.order.repository.OrderDataRepository;
@@ -24,6 +26,7 @@ public class OrderServiceImpl implements OrderService{
     private final OrderHeaderRepository orderHeaderRepository;
     private final OrderDataRepository orderDataRepository;
     private final KafkaProducerService kafkaProducerService;
+    private final ProductServiceClient productServiceClient;
 
     @Override
     public void createOrder(OrderHeaderDto orderHeaderDto){
@@ -60,19 +63,21 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<OrderHeaderDto> getOrders(String memberId){
-        List<OrderHeader> orderHeaders = orderHeaderRepository.findAllByMemberId(memberId);
+    public List<OrderHeaderDto> getOrders(OrderHeaderDto orderHeaderDto){
+        List<OrderHeader> orderHeaders = orderHeaderRepository.findAllByMemberId(orderHeaderDto.getBuyerId());
         List<OrderHeaderDto> result = new ArrayList<>();
 
         // OrderData -> OrderDataDto
         orderHeaders.forEach(v -> {
             List<OrderDataDto> orderDataDtoList = new ArrayList<>();
             v.getOrderData().forEach(w -> {
-                OrderDataDto orderDataDto = new OrderDataDto(w);
+                System.out.println("w"  + w.getProductId());
+                ProductDto productDto = productServiceClient.getProduct(w.getProductId());
+                OrderDataDto orderDataDto = new OrderDataDto(w, productDto.getThumbnailUrl());
                 orderDataDtoList.add(orderDataDto);
             });
-            OrderHeaderDto orderHeaderDto = new OrderHeaderDto(v, orderDataDtoList);
-            result.add(orderHeaderDto);
+            OrderHeaderDto orderHeaderDto_ = new OrderHeaderDto(v, orderDataDtoList);
+            result.add(orderHeaderDto_);
         });
         return result;
     }
@@ -97,5 +102,11 @@ public class OrderServiceImpl implements OrderService{
         });
 
         orderDataRepository.saveAll(orderHeader.get().getOrderData());
+    }
+
+    @Override
+    public Long getOrdersPrice(OrderHeaderDto orderHeaderDto){
+        Long totalPrice = orderHeaderRepository.findTotalPriceByMemberId(orderHeaderDto.getBuyerId());
+        return totalPrice;
     }
 }

@@ -32,8 +32,8 @@ public class OrderSuccessTest {
 
     private static final String BASE_URL = "/orders";
     private static final Long id = 8L;
-    private static final String buyerId = "3";
-    private static final Double totalPrice = 1000000D;
+    private String buyerId = "3";
+    private static final Long totalPrice = 1000000L;
     private static final Long totalQuantity = 5L;
     private static final String address1 = "Seoul";
     private static final String address2 = "Dang-san";
@@ -50,7 +50,7 @@ public class OrderSuccessTest {
                         .productId(43L)
                         .productName("테일러드 카라 싱글 버튼 자켓")
                         .productQuantity(10L)
-                        .productPrice(2360000D)
+                        .productPrice(2360000L)
                         .build();
 
         OrderDataDto orderDataDto_o2 = OrderDataDto.builder()
@@ -58,7 +58,7 @@ public class OrderSuccessTest {
                         .productId(44L)
                         .productName("스모크 러플 엣지 롱 자켓")
                         .productQuantity(4L)
-                        .productPrice(1790000D)
+                        .productPrice(1790000L)
                         .build();
 
         orderDataDtoList.add(orderDataDto_o1);
@@ -88,8 +88,17 @@ public class OrderSuccessTest {
     @DisplayName("주문 조회 테스트")
     void read_order_test() throws Exception {
 
-        mvc.perform(get(BASE_URL + "/pays/" + buyerId)
+        buyerId = "5";
+
+        String body = mapper.writeValueAsString(
+                OrderHeaderDto.builder()
+                        .buyerId(buyerId)
+                        .build()
+        );
+
+        mvc.perform(post(BASE_URL + "/pays/list")
                         .header("memberId", "1")
+                        .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());

@@ -17,4 +17,10 @@ public interface OrderHeaderRepository extends JpaRepository<OrderHeader, Long> 
                     + "AND od.deletedDate is null "
     )
     List<OrderHeader> findAllByMemberId(String memberId);
+
+    @Query(
+            value = "SELECT sum(oh.totalPrice) FROM OrderHeader oh "
+                    + "WHERE oh.buyerId = :buyerId "
+    )
+    Long findTotalPriceByMemberId(String buyerId);
 }
