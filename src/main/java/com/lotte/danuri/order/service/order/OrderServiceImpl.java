@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService{
                         .totalQuantity(orderHeaderDto.getTotalQuantity())
                         .address1(orderHeaderDto.getAddress1())
                         .address2(orderHeaderDto.getAddress2())
-                        .orderDate(orderHeaderDto.getOrderDate())
+                        .orderDate(LocalDateTime.now())
                         .build()
         );
 
