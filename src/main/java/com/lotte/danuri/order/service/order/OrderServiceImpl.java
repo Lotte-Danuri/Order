@@ -12,6 +12,9 @@ import com.lotte.danuri.order.repository.OrderDataRepository;
 import com.lotte.danuri.order.repository.OrderHeaderRepository;
 import com.lotte.danuri.order.service.messagequeue.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,12 +22,14 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService{
 
     private final OrderHeaderRepository orderHeaderRepository;
     private final OrderDataRepository orderDataRepository;
     private final KafkaProducerService kafkaProducerService;
     private final ProductServiceClient productServiceClient;
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @Override
     public void createOrder(OrderHeaderDto orderHeaderDto){
@@ -64,13 +69,15 @@ public class OrderServiceImpl implements OrderService{
     public List<OrderHeaderDto> getOrders(OrderHeaderDto orderHeaderDto){
         List<OrderHeader> orderHeaders = orderHeaderRepository.findAllByMemberId(orderHeaderDto.getBuyerId());
         List<OrderHeaderDto> result = new ArrayList<>();
-
         // OrderData -> OrderDataDto
         orderHeaders.forEach(v -> {
             List<OrderDataDto> orderDataDtoList = new ArrayList<>();
             v.getOrderData().forEach(w -> {
-                System.out.println("w"  + w.getProductId());
-                ProductDto productDto = productServiceClient.getProduct(w.getProductId());
+                log.info("Before Call [getProduct] Method IN [Order-Service]");
+                CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+                ProductDto productDto = circuitBreaker.run(() -> productServiceClient.getProduct(w.getProductId()),
+                        throwable -> new ProductDto());
+                log.info("After Call [getProduct] Method IN [Order-Service]");
                 OrderDataDto orderDataDto = new OrderDataDto(w, productDto.getThumbnailUrl());
                 orderDataDtoList.add(orderDataDto);
             });
