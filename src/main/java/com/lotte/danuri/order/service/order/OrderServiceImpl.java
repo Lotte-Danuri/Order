@@ -67,6 +67,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<OrderHeaderDto> getOrders(OrderHeaderDto orderHeaderDto){
+        log.info("Before Retrieve [getOrders] Method IN [Order-Service]");
         List<OrderHeader> orderHeaders = orderHeaderRepository.findAllByMemberId(orderHeaderDto.getBuyerId());
         List<OrderHeaderDto> result = new ArrayList<>();
         // OrderData -> OrderDataDto
@@ -85,6 +86,7 @@ public class OrderServiceImpl implements OrderService{
             result.add(orderHeaderDto_);
         });
         Collections.reverse(result);
+        log.info("After Retrieve [getOrders] Method IN [Order-Service]");
         return result;
     }
 
@@ -112,7 +114,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Long getOrdersPrice(OrderHeaderDto orderHeaderDto){
+        log.info("Before Retrieve [getOrdersPrice] Method IN [Order-Service]");
         Long totalPrice = orderHeaderRepository.findTotalPriceByMemberId(orderHeaderDto.getBuyerId());
+        log.info("After Retrieve [getOrdersPrice] Method IN [Order-Service]");
         return totalPrice;
     }
 }
