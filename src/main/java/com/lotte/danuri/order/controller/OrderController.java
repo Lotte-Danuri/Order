@@ -1,6 +1,7 @@
 package com.lotte.danuri.order.controller;
 
 import com.lotte.danuri.order.model.dto.OrderHeaderDto;
+import com.lotte.danuri.order.model.dto.request.ProductListDto;
 import com.lotte.danuri.order.service.order.OrderService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,13 @@ public class OrderController {
 
         Long totalPrice = orderService.getOrdersPrice(orderHeaderDto);
         return ResponseEntity.ok(totalPrice);
+    }
+
+    @PostMapping(value ="/pays/list/count", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(value = "주문 총 횟수 조회", notes = "상품 ID 리스트에 의해 주문 횟수 리스트를 조회한다.")
+    public ResponseEntity<?> getOrdersCount (@RequestBody ProductListDto productListDto){
+
+        List<Long> orderCount = orderService.getOrdersCount(productListDto);
+        return ResponseEntity.ok(orderCount);
     }
 }
