@@ -6,6 +6,7 @@ import com.lotte.danuri.order.exception.OrderNotFoundException;
 import com.lotte.danuri.order.model.dto.OrderDataDto;
 import com.lotte.danuri.order.model.dto.OrderHeaderDto;
 import com.lotte.danuri.order.model.dto.client.ProductDto;
+import com.lotte.danuri.order.model.dto.request.ProductListDto;
 import com.lotte.danuri.order.model.entity.OrderData;
 import com.lotte.danuri.order.model.entity.OrderHeader;
 import com.lotte.danuri.order.repository.OrderDataRepository;
@@ -118,5 +119,16 @@ public class OrderServiceImpl implements OrderService{
         Long totalPrice = orderHeaderRepository.findTotalPriceByMemberId(orderHeaderDto.getBuyerId());
         log.info("After Retrieve [getOrdersPrice] Method IN [Order-Service]");
         return totalPrice;
+    }
+
+    @Override
+    public List<Long> getOrdersCount(ProductListDto productListDto){
+        log.info("Before Retrieve [getOrdersCount] Method IN [Product-Service]");
+        List<Long> result = new ArrayList<>();
+        productListDto.getProductId().forEach(v -> {
+            result.add(orderDataRepository.countByProductId(v));
+        });
+        log.info("After Retrieve [getOrdersCount] Method IN [Product-Service]");
+        return result;
     }
 }
