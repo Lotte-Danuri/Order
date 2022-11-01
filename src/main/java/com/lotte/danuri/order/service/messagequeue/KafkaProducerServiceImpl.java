@@ -2,6 +2,7 @@ package com.lotte.danuri.order.service.messagequeue;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lotte.danuri.order.model.dto.OrderDataDto;
 import com.lotte.danuri.order.model.dto.OrderHeaderDto;
 import com.lotte.danuri.order.model.entity.OrderData;
@@ -34,7 +35,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService{
 
     @Override
     public OrderHeaderDto send(String topic, OrderHeaderDto orderHeaderDto){
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
         String jsonInString = "";
         try{
             jsonInString = mapper.writeValueAsString(orderHeaderDto);
