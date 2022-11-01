@@ -63,6 +63,7 @@ public class OrderServiceImpl implements OrderService{
             orderDataList.add(orderData);
             kafkaProducerService.send("order-insert",v);
         });
+        kafkaProducerService.send("order-insert-cart-delete",orderHeaderDto);
         orderDataRepository.saveAll(orderDataList);
     }
 
