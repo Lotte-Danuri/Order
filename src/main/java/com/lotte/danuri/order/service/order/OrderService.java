@@ -16,4 +16,6 @@ public interface OrderService {
     Long getOrdersPrice(OrderHeaderDto orderHeaderDto);
 
     List<Long> getOrdersCount(ProductListDto productListDto);
+
+    List<Long> getOrdersCountByDate(ProductListDto productListDto);
 }

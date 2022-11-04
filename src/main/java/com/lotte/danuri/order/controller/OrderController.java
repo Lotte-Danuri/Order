@@ -59,4 +59,12 @@ public class OrderController {
         List<Long> orderCount = orderService.getOrdersCount(productListDto);
         return ResponseEntity.ok(orderCount);
     }
+
+    @PostMapping(value ="/pays/list/date/count", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ApiOperation(value = "기간 별 주문 총 횟수 조회", notes = "상품 ID 리스트에 의해 주문 횟수 리스트를 조회한다.")
+    public ResponseEntity<?> getOrdersCountByDate (@RequestBody ProductListDto productListDto){
+
+        List<Long> orderCount = orderService.getOrdersCountByDate(productListDto);
+        return ResponseEntity.ok(orderCount);
+    }
 }

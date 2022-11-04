@@ -132,4 +132,15 @@ public class OrderServiceImpl implements OrderService{
         log.info("After Retrieve [getOrdersCount] Method IN [Product-Service]");
         return result;
     }
+
+    @Override
+    public List<Long> getOrdersCountByDate(ProductListDto productListDto){
+        log.info("Before Retrieve [getOrdersCountByDate] Method IN [Product-Service]");
+        List<Long> result = new ArrayList<>();
+        productListDto.getProductId().forEach(v -> {
+            result.add(orderDataRepository.countByProductIdAndCreatedDateBetween(v,productListDto.getStartDate(),productListDto.getEndDate()));
+        });
+        log.info("After Retrieve [getOrdersCountByDate] Method IN [Product-Service]");
+        return result;
+    }
 }
