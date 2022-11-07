@@ -81,7 +81,7 @@ public class OrderServiceImpl implements OrderService{
                 ProductDto productDto = circuitBreaker.run(() -> productServiceClient.getProduct(w.getProductId()),
                         throwable -> new ProductDto());
                 log.info("After Call [getProduct] Method IN [Order-Service]");
-                OrderDataDto orderDataDto = new OrderDataDto(w, productDto.getThumbnailUrl());
+                OrderDataDto orderDataDto = new OrderDataDto(w, productDto.getThumbnailUrl(), productDto.getProductCode());
                 orderDataDtoList.add(orderDataDto);
             });
             OrderHeaderDto orderHeaderDto_ = new OrderHeaderDto(v, orderDataDtoList);
